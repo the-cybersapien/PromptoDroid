@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/red600</color>
+    <color name="colorPrimaryDark">@color/red900</color>
+    <color name="colorAccent">@color/cyan500</color>
+
+    <color name="red100">#FFCDD2</color>
+    <color name="red600">#E53935</color>
+    <color name="red900">#B71C1C</color>
+    <color name="white">#ffffff</color>
+    <color name="grey200">#eeeeee</color>
+    <color name="grey600">#757575</color>
+    <color name="cyan500">#00BCD4</color>
+</resources>
