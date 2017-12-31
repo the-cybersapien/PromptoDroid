@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">PromptoDroid</string>
+
+    <!-- Just a beautiful Poem I like, to help debug the project with large text :) -->
+    <string name="lorem_ipsum">
+Your smile so beautiful as the sun that shines through on a warm sunny day.
+With a simple flash of that sexy smile, you take my breath aw.
+And every time I see your face.
+I smile remembering each loving embrace.
+Your eyes twinkle like the stars bright in the sky.
+Staring deep into caring eyes leaves no questions why.
+I lose myself in your entrancing stare.
+I feel like to you my soul I could bare.
+Your intoxicating smell as sweet as a fully bloomed rose.
+Which is just one more reason why it is you that I have chose.
+Your familiar scent warms my heart.
+And will trigger fond memories if we ever have to part.
+Your voice is as calming as the ocean waves meeting the shore.
+Teaching me the meaning of feelings I never felt before.
+I could spend hours listening to you on the phone.
+Reaching a level we have only known
+    </string>
 </resources>
