@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resConfigs "auto"
     }
     buildTypes {
         release {
@@ -31,8 +32,13 @@ dependencies {
     // Firebase Integration Libraries
     implementation "com.google.firebase:firebase-database:$firebaseVersion"
     implementation "com.google.firebase:firebase-core:$firebaseVersion"
+    implementation "com.google.firebase:firebase-auth:$firebaseVersion"
+    implementation 'com.firebaseui:firebase-ui-auth:3.1.2'
+    // Google Play Services
+    implementation "com.google.android.gms:play-services-base:$gmsVersion"
+    implementation "com.google.android.gms:play-services-auth:$gmsVersion"
     // Crashlytics with Firebase
-    implementation("com.crashlytics.sdk.android:crashlytics:2.8.0@aar") {
+    implementation('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
         transitive true
     }
     // Testing Libraries
@@ -42,7 +48,5 @@ dependencies {
      androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
      */
 }
-
-
 
 apply plugin: 'com.google.gms.google-services'
