@@ -1,8 +1,12 @@
 package xyz.cybersapien.promptodroid;
 
+import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Date;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -17,6 +21,8 @@ public class PromptodroidApp extends MultiDexApplication {
         super.onCreate();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         database.setPersistenceEnabled(true);
-        Fabric.with(this);
+        CrashlyticsCore crashCore = new CrashlyticsCore.Builder()
+                .disabled(BuildConfig.DEBUG).build();
+        Fabric.with(this, crashCore);
     }
 }

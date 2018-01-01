@@ -20,4 +20,10 @@ Teaching me the meaning of feelings I never felt before.
 I could spend hours listening to you on the phone.
 Reaching a level we have only known
     </string>
+    <string name="title_activity_main">Prompts</string>
+    <string name="words_string">%d words</string>
+    <string name="prompting_activity">Prompting Activity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

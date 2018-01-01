@@ -1,4 +1,4 @@
-package xyz.cybersapien.promptodroid.activity;
+package xyz.cybersapien.promptodroid.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

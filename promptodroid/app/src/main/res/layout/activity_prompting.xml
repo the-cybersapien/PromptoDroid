@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context="xyz.cybersapien.promptodroid.activity.PromptingActivity">
+    tools:context=".ui.activity.PromptingActivity">
 
     <xyz.cybersapien.promptodroid.ui.AutoChangingTextView
         android:id="@+id/scrollingTextView"
