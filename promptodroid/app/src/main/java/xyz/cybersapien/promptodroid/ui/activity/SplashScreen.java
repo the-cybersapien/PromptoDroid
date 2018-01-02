@@ -12,11 +12,13 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 
 import xyz.cybersapien.promptodroid.R;
-import xyz.cybersapien.promptodroid.utils.NetUtils;
+import xyz.cybersapien.promptodroid.utils.Constants;
+import xyz.cybersapien.promptodroid.utils.Utilities;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -62,7 +64,7 @@ public class SplashScreen extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-                    if (!NetUtils.isInternetConnected(SplashScreen.this)) {
+                    if (!Utilities.isInternetConnected(SplashScreen.this)) {
                         getAlertDialog().show();
                     } else {
                         // User is signed out

@@ -20,6 +20,12 @@ public class PromptStory implements Parcelable {
     public PromptStory() {
     }
 
+    public PromptStory(String storyTitle, String storyDetail) {
+        this.storyTitle = storyTitle;
+        this.storyDetail = storyDetail;
+        date = new Date().getTime();
+    }
+
     public PromptStory(String storyTitle, String storyDetail, String userId) {
         this.storyTitle = storyTitle;
         this.storyDetail = storyDetail;
@@ -100,4 +106,16 @@ public class PromptStory implements Parcelable {
             return new PromptStory[size];
         }
     };
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("PromptStory{");
+        sb.append("storyTitle='").append(storyTitle).append('\'');
+        sb.append(", storyDetail='").append(storyDetail).append('\'');
+        sb.append(", id='").append(id).append('\'');
+        sb.append(", date=").append(date);
+        sb.append(", userId='").append(userId).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

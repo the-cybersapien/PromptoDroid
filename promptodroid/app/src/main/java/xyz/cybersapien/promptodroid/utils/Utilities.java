@@ -4,13 +4,17 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by ogcybersapien on 31/12/17.
  */
 
-public final class NetUtils {
+public final class Utilities {
 
-    private NetUtils() {
+    private Utilities() {
         // Empty private constructor as this class must not be able to initialize data
     }
 
@@ -18,5 +22,10 @@ public final class NetUtils {
         ConnectivityManager cManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = cManager != null ? cManager.getActiveNetworkInfo() : null;
         return info != null && info.isConnected();
+    }
+
+    public static String getFormattedDate(long date) {
+        DateFormat dateFormat = SimpleDateFormat.getDateInstance();
+        return dateFormat.format(new Date(date));
     }
 }
