@@ -26,4 +26,8 @@ Reaching a level we have only known
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_prompts">No Prompts :(</string>
+    <string name="click_button_hint">Click the Button below to add one!</string>
+    <string name="error_occured">An unexpected error Occurred</string>
+    <string name="check_internet">Please check your internet and try again</string>
 </resources>

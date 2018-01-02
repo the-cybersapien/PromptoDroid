@@ -10,6 +10,7 @@ import xyz.cybersapien.promptodroid.ui.AutoChangingTextView;
 public class PromptingActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = PromptingActivity.class.getSimpleName();
+    public static final String SELECTED_STORY = "selectedStory";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

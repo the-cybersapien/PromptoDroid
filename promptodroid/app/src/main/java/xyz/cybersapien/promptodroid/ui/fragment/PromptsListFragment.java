@@ -7,12 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -34,29 +33,33 @@ import xyz.cybersapien.recyclerele.RecyclerELEAdapter;
 /**
  * A simple {@link Fragment} subclass to show a list of stories to the user.
  */
-public class PromptsListFragment extends Fragment {
+public class PromptsListFragment extends Fragment implements PromptsAdapter.OnClickListener {
+
+    private static final String LOG_TAG = PromptsListFragment.class.getSimpleName();
 
     @BindView(R.id.prompts_list_recycler_view)
     RecyclerView promptsListRecyclerView;
 
     @OnClick(R.id.fab_new_prompt)
     void addNew() {
-        addNewPromptCallback.addNewPrompt();
+        interactionListener.addNewPrompt();
     }
 
-    private OnAddNewPrompt addNewPromptCallback;
-    private FirebaseUser firebaseUser;
+    private InteractionListener interactionListener;
     private User user;
     private RecyclerELEAdapter recyclerAdapter;
     private ArrayList<PromptStory> storyArrayList;
 
+    private View emptyView;
+    private View errorView;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnAddNewPrompt) {
-            addNewPromptCallback = (OnAddNewPrompt) context;
+        if (context instanceof InteractionListener) {
+            interactionListener = (InteractionListener) context;
         } else {
-            throw new IllegalStateException("Containing Activity must implement PromptsListFragment.OnAddNewPrompt");
+            throw new ClassCastException(getActivity().getClass().getName() + " must implement PromptsListFragment.InteractionListener");
         }
     }
 
@@ -66,28 +69,35 @@ public class PromptsListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_prompts_list, container, false);
         ButterKnife.bind(this, v);
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        user = new User(firebaseUser);
-        storyArrayList = new ArrayList<>();
-        PromptsAdapter adapter = new PromptsAdapter(getContext(), storyArrayList);
-        recyclerAdapter = new RecyclerELEAdapter(adapter, null, null, null);
+        user = interactionListener.getCurrentUser();
         promptsListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        emptyView = inflater.inflate(R.layout.view_empty, promptsListRecyclerView, false);
+        errorView = inflater.inflate(R.layout.view_error, promptsListRecyclerView, false);
+
+        storyArrayList = new ArrayList<>();
+        PromptsAdapter adapter = new PromptsAdapter(getContext(), storyArrayList, this);
+        recyclerAdapter = new RecyclerELEAdapter(adapter, emptyView, null, errorView);
+
         promptsListRecyclerView.setAdapter(recyclerAdapter);
+        recyclerAdapter.setCurrentView(RecyclerELEAdapter.VIEW_EMPTY);
 
         DataStore.getInstance().getUserDataReference(user).addValueEventListener(databaseValueEventListener);
-
         return v;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        addNewPromptCallback = null;
+        interactionListener = null;
     }
 
     ValueEventListener databaseValueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
+            Log.d(LOG_TAG, "onDataChange: " + dataSnapshot.toString());
+            long snapshot = dataSnapshot.child(Constants.PROMPT_KEY).getChildrenCount();
+            Log.d(LOG_TAG, "onDataChange: " + snapshot);
 
             Iterator<DataSnapshot> snapshotIterator = dataSnapshot
                     .child(Constants.PROMPT_KEY).getChildren().iterator();
@@ -97,11 +107,14 @@ public class PromptsListFragment extends Fragment {
                 PromptStory story = currentData.getValue(PromptStory.class);
                 if (story != null) {
                     stories.add(story);
+                    Log.d(LOG_TAG, "onDataChange: " + story);
                 }
             }
 
             storyArrayList.clear();
             storyArrayList.addAll(stories);
+            recyclerAdapter.notifyDataSetChanged();
+            recyclerAdapter.setCurrentView(RecyclerELEAdapter.VIEW_NORMAL);
         }
 
         @Override
@@ -110,8 +123,17 @@ public class PromptsListFragment extends Fragment {
         }
     };
 
-    public interface OnAddNewPrompt {
+    @Override
+    public void onItemClick(int i) {
+        interactionListener.recyclerItemSelected(storyArrayList.get(i));
+    }
+
+    public interface InteractionListener {
         void addNewPrompt();
+
+        void recyclerItemSelected(PromptStory story);
+
+        User getCurrentUser();
     }
 
 }
