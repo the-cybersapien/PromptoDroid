@@ -31,8 +31,10 @@ public class PromptEditFragment extends Fragment {
     private static final String LOG_TAG = PromptEditFragment.class.getSimpleName();
     public static final String SELECTED_PROMPT = "selected_prompt";
     public static final String IS_NEW_PROMPT = "new_prompt";
+    public static final String IS_EDITING_EXTRA = "extra";
 
     private boolean newPrompt;
+    private boolean isEditMode;
     private PromptStory story;
     private InteractionListener interactionListener;
 
@@ -87,6 +89,7 @@ public class PromptEditFragment extends Fragment {
         } else {
             newPrompt = savedInstanceState.getBoolean(IS_NEW_PROMPT);
             story = savedInstanceState.getParcelable(SELECTED_PROMPT);
+            isEditMode = savedInstanceState.getBoolean(IS_EDITING_EXTRA);
         }
     }
 
@@ -101,9 +104,20 @@ public class PromptEditFragment extends Fragment {
             initNewPrompt();
         } else {
             initStoryDetail();
+            if (isEditMode) {
+                initEditor();
+            }
         }
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(IS_NEW_PROMPT, newPrompt);
+        outState.putParcelable(SELECTED_PROMPT, story);
+        outState.putBoolean(IS_EDITING_EXTRA, isEditMode);
     }
 
     @Override
@@ -128,13 +142,6 @@ public class PromptEditFragment extends Fragment {
     }
 
     private void initEditor() {
-        // TODO: Enable  Editor and change FAB to save button
-
-    }
-
-    private void initNewPrompt() {
-        promptDateTextView.setVisibility(View.GONE);
-        wordCountTextView.setVisibility(View.GONE);
         titleFieldBoxes.setEnabled(true);
         storyFieldBoxes.setEnabled(true);
         actionButton.setImageResource(R.drawable.ic_check);
@@ -144,6 +151,13 @@ public class PromptEditFragment extends Fragment {
                 saveDetails();
             }
         });
+        isEditMode = true;
+    }
+
+    private void initNewPrompt() {
+        promptDateTextView.setVisibility(View.GONE);
+        wordCountTextView.setVisibility(View.GONE);
+        initEditor();
     }
 
     private void initStoryDetail() {

@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements PromptsListFragme
     public void updatePrompt(PromptStory story) {
         DatabaseReference dbRef = DataStore.getInstance().getUserDataReference(currentUser).child(Constants.PROMPT_KEY + "/" + story.getDate());
         dbRef.setValue(story);
+        getSupportFragmentManager().beginTransaction()
+                .remove(promptEditFragment).commit();
     }
 
     @Override

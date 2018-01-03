@@ -10,5 +10,6 @@
     <color name="white">#ffffff</color>
     <color name="grey200">#eeeeee</color>
     <color name="grey600">#757575</color>
+    <color name="grey850">#303030</color>
     <color name="cyan500">#00BCD4</color>
 </resources>
