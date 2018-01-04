@@ -32,7 +32,10 @@ Reaching a level we have only known
     <string name="prompt_title">Prompt Title</string>
 
     <string name="fab_fade_animation">com.marcoscg.fabscrollanimations.Fade</string>
-    <string name="start_scrolling">Start Scrolling</string>
-    <string name="stop_scrolling">Stop Scrolling</string>
-    <string name="restart_prompt">Restart Prompts</string>
+    <string name="start_prompt">Start Prompt</string>
+    <string name="stop_prompt">Stop Prompt</string>
+    <string name="restart_prompt">Restart Prompt</string>
+    <string name="promptodroid_logo">PromptoDroid logo</string>
+    <string name="new_prompt">Start Prompt</string>
+    <string name="empty_view">Empty View</string>
 </resources>

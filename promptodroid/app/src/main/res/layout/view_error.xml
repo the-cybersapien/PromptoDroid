@@ -8,6 +8,7 @@
         android:id="@+id/empty_computer_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/error_occured"
         android:src="@drawable/error"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

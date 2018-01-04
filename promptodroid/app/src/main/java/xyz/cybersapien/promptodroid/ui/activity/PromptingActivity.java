@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,16 +67,19 @@ public class PromptingActivity extends AppCompatActivity implements AutoChanging
 
     private void startPrompting() {
         toggleButton.setImageResource(R.drawable.ic_pause);
+        toggleButton.setContentDescription(getString(R.string.stop_prompt));
         promptingTextView.setRunning(true);
     }
 
     private void stopPrompting() {
         toggleButton.setImageResource(R.drawable.ic_play);
+        toggleButton.setContentDescription(getString(R.string.start_prompt));
         promptingTextView.setRunning(false);
     }
 
     @Override
     public void onFinished() {
         toggleButton.setImageResource(R.drawable.ic_refresh);
+        toggleButton.setContentDescription(getString(R.string.restart_prompt));
     }
 }

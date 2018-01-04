@@ -51,7 +51,7 @@ public class PromptEditFragment extends Fragment {
     TextView promptDateTextView;
     @BindView(R.id.prompt_word_count_view)
     TextView wordCountTextView;
-    @BindView(R.id.fab_edit_prompt)
+    @BindView(R.id.fab_play_prompt)
     FloatingActionButton actionButton;
 
 

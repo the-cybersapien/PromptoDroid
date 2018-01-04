@@ -32,6 +32,7 @@
             android:layout_gravity="center"
             android:layout_margin="50dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/promptodroid_logo"
             android:src="@drawable/ic_computer" />
     </FrameLayout>
 
