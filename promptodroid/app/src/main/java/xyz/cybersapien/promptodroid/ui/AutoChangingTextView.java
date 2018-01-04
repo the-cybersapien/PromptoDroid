@@ -2,6 +2,8 @@ package xyz.cybersapien.promptodroid.ui;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -34,15 +36,17 @@ public class AutoChangingTextView extends android.support.v7.widget.AppCompatTex
     private boolean running = false;
     private String completeText;
     private String[] wordsArray;
+    private String currentDisplay;
     private int currentWordIndex = 0;
     @PromptType
     private int promptType = PROMPT_TYPE_LINE;
     private Thread runningThread;
 
+    private OnFinishedListener finishedListener;
+
     public AutoChangingTextView(Context context) {
         super(context);
         running = false;
-        runningThread = new Thread(this);
     }
 
     public AutoChangingTextView(Context context, AttributeSet attrs) {
@@ -61,10 +65,44 @@ public class AutoChangingTextView extends android.support.v7.widget.AppCompatTex
         speed = array.getInt(R.styleable.AutoChangingTextView_speed, 1);
         boolean running = array.getBoolean(R.styleable.AutoChangingTextView_running, false);
         promptType = array.getInteger(R.styleable.AutoChangingTextView_promptType, PROMPT_TYPE_LINE);
-        runningThread = new Thread(this);
         setCustomText(array.getNonResourceString(R.styleable.AutoChangingTextView_customText));
         array.recycle();
         setRunning(running);
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        SavedState state = new SavedState(superState);
+        state.numWords = this.numberOfWords;
+        state.speed = this.speed;
+        state.running = this.running;
+        state.currentWordIndex = this.currentWordIndex;
+        state.promptType = this.promptType;
+        state.completeData = this.completeText;
+        state.wordsArray = this.wordsArray;
+        state.currentText = this.currentDisplay;
+        return state;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        super.onRestoreInstanceState(state);
+        if (state instanceof SavedState) {
+            SavedState stateData = (SavedState) state;
+            this.numberOfWords = stateData.numWords;
+            this.speed = stateData.speed;
+            this.running = stateData.running;
+            this.currentWordIndex = stateData.currentWordIndex;
+            this.promptType = stateData.promptType;
+            this.completeText = stateData.completeData;
+            this.wordsArray = stateData.wordsArray;
+            this.currentDisplay = stateData.currentText;
+        }
+        this.setText(currentDisplay);
+        if (running) {
+            setRunning(true);
+        }
     }
 
     @Override
@@ -77,12 +115,13 @@ public class AutoChangingTextView extends android.support.v7.widget.AppCompatTex
             }
             final String displayWords = getWordsToDisplay();
             Log.i(LOG_TAG, "run: " + displayWords);
-            post(new Runnable() {
-                @Override
-                public void run() {
-                    setText(displayWords);
+            post(() -> setText(displayWords));
+            if (currentWordIndex == -1) {
+                running = false;
+                if (finishedListener != null) {
+                    finishedListener.onFinished();
                 }
-            });
+            }
         }
     }
 
@@ -96,8 +135,14 @@ public class AutoChangingTextView extends android.support.v7.widget.AppCompatTex
 
     private String getWordsByLine() {
         int idx = completeText.indexOf(".", currentWordIndex);
-        String returnString = completeText.substring(currentWordIndex, idx + 1);
-        currentWordIndex = idx + 1;
+        String returnString;
+        if (idx != -1) {
+            returnString = completeText.substring(currentWordIndex, idx + 1);
+            currentWordIndex = idx + 1;
+        } else {
+            returnString = completeText.substring(currentWordIndex);
+            currentWordIndex = -1;
+        }
         return returnString.trim();
     }
 
@@ -134,11 +179,17 @@ public class AutoChangingTextView extends android.support.v7.widget.AppCompatTex
     public void setRunning(boolean running) {
         this.running = running;
         if (running) {
-            runningThread.start();
-        } else {
-            if (runningThread.isAlive()) {
-                runningThread.interrupt();
+            if (runningThread == null) {
                 runningThread = new Thread(this);
+                runningThread.start();
+            } else {
+                runningThread.interrupt();
+                runningThread = null;
+                setRunning(true);
+            }
+        } else {
+            if (runningThread != null && runningThread.isAlive()) {
+                runningThread.interrupt();
             }
         }
     }
@@ -146,7 +197,6 @@ public class AutoChangingTextView extends android.support.v7.widget.AppCompatTex
     public void toggleRunning() {
         setRunning(!isRunning());
     }
-
 
     public void setCustomText(String text) {
         if (text != null) {
@@ -170,5 +220,67 @@ public class AutoChangingTextView extends android.support.v7.widget.AppCompatTex
     @PromptType
     public int getPromptType() {
         return promptType;
+    }
+
+    public void setFinishedListener(OnFinishedListener finishedListener) {
+        this.finishedListener = finishedListener;
+    }
+
+    static class SavedState extends BaseSavedState {
+
+        int numWords;
+        int speed;
+        boolean running;
+        int currentWordIndex;
+        int promptType;
+        String completeData;
+        String[] wordsArray;
+        String currentText;
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        public SavedState(Parcel source) {
+            super(source);
+            this.numWords = source.readInt();
+            this.speed = source.readInt();
+            this.running = source.readByte() != 0;
+            this.currentWordIndex = source.readInt();
+            this.promptType = source.readInt();
+            this.completeData = source.readString();
+            source.readStringArray(this.wordsArray);
+            this.currentText = source.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeInt(numWords);
+            out.writeInt(speed);
+            out.writeByte((byte) (running ? 1 : 0));
+            out.writeInt(currentWordIndex);
+            out.writeInt(promptType);
+            out.writeString(completeData);
+            out.writeStringArray(wordsArray);
+            out.writeString(currentText);
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+
+            @Override
+            public SavedState createFromParcel(Parcel source) {
+                return new SavedState(source);
+            }
+
+            @Override
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+    }
+
+    public interface OnFinishedListener {
+        void onFinished();
     }
 }

@@ -2,10 +2,13 @@ package xyz.cybersapien.promptodroid.ui.fragment;
 
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,8 +20,6 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import studio.carbonylgroup.textfieldboxes.ExtendedEditText;
-import studio.carbonylgroup.textfieldboxes.TextFieldBoxes;
 import xyz.cybersapien.promptodroid.R;
 import xyz.cybersapien.promptodroid.data.model.PromptStory;
 import xyz.cybersapien.promptodroid.utils.Utilities;
@@ -38,20 +39,21 @@ public class PromptEditFragment extends Fragment {
     private PromptStory story;
     private InteractionListener interactionListener;
 
-    @BindView(R.id.title_field_boxes)
-    TextFieldBoxes titleFieldBoxes;
-    @BindView(R.id.title_extended_edit_text)
-    ExtendedEditText titleEditText;
-    @BindView(R.id.story_text_field_box)
-    TextFieldBoxes storyFieldBoxes;
-    @BindView(R.id.story_extended_edit_text)
-    ExtendedEditText storyEditText;
+    @BindView(R.id.title_text_layout)
+    TextInputLayout titleTextLayout;
+    @BindView(R.id.title_edit_text)
+    TextInputEditText titleEditText;
+    @BindView(R.id.story_text_layout)
+    TextInputLayout storyTextLayout;
+    @BindView(R.id.story_edit_text)
+    TextInputEditText storyEditText;
     @BindView(R.id.prompt_date_view)
     TextView promptDateTextView;
     @BindView(R.id.prompt_word_count_view)
     TextView wordCountTextView;
     @BindView(R.id.fab_edit_prompt)
     FloatingActionButton actionButton;
+
 
     public static PromptEditFragment getInstance(@Nullable PromptStory story) {
         PromptEditFragment editFragment = new PromptEditFragment();
@@ -142,8 +144,8 @@ public class PromptEditFragment extends Fragment {
     }
 
     private void initEditor() {
-        titleFieldBoxes.setEnabled(true);
-        storyFieldBoxes.setEnabled(true);
+        titleTextLayout.setEnabled(true);
+        storyTextLayout.setEnabled(true);
         actionButton.setImageResource(R.drawable.ic_check);
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,6 +154,8 @@ public class PromptEditFragment extends Fragment {
             }
         });
         isEditMode = true;
+        enableEditText(titleEditText);
+        enableEditText(storyEditText);
     }
 
     private void initNewPrompt() {
@@ -162,6 +166,8 @@ public class PromptEditFragment extends Fragment {
 
     private void initStoryDetail() {
         setHasOptionsMenu(true);
+        disableEditText(titleEditText);
+        disableEditText(storyEditText);
         titleEditText.setText(story.getStoryTitle());
         storyEditText.setText(story.getStoryDetail());
         String date = Utilities.getFormattedDate(story.getDate());
@@ -189,6 +195,40 @@ public class PromptEditFragment extends Fragment {
             story.setStoryDetail(storyDetail);
             interactionListener.updatePrompt(story);
         }
+    }
+
+    private void disableEditText(TextInputEditText editText) {
+        editText.setFocusable(false);
+        editText.setEnabled(false);
+        editText.setCursorVisible(false);
+        editText.setKeyListener(null);
+        int backgroundColor;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            backgroundColor = getResources().getColor(R.color.grey850, null);
+        } else {
+            backgroundColor = getResources().getColor(R.color.grey850);
+        }
+        changeBackgroundColor(backgroundColor);
+    }
+
+    private void enableEditText(TextInputEditText editText) {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.setEnabled(true);
+        editText.setCursorVisible(true);
+        editText.setKeyListener(new TextInputEditText(getContext()).getKeyListener());
+        int backgroundColor;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            backgroundColor = getResources().getColor(R.color.cardview_dark_background, null);
+        } else {
+            backgroundColor = getResources().getColor(R.color.cardview_dark_background);
+        }
+        changeBackgroundColor(backgroundColor);
+    }
+
+    private void changeBackgroundColor(int backgroundColor) {
+        titleTextLayout.setBackgroundColor(backgroundColor);
+        storyTextLayout.setBackgroundColor(backgroundColor);
     }
 
     public interface InteractionListener {

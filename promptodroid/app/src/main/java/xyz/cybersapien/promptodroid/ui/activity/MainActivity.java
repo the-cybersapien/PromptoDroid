@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements PromptsListFragme
         if (isTwoPane) {
             setEditFragment(null);
         } else {
-            // TODO: create Activity for Mobile Phones layout
+            launchMobileActivity(null);
         }
     }
 
@@ -80,7 +80,16 @@ public class MainActivity extends AppCompatActivity implements PromptsListFragme
     public void recyclerItemSelected(PromptStory story) {
         if (isTwoPane) {
             setEditFragment(story);
+        } else {
+            launchMobileActivity(story);
         }
+    }
+
+    private void launchMobileActivity(PromptStory story) {
+        Intent intent = new Intent(MainActivity.this, PromptEditActivity.class);
+        intent.putExtra(PromptEditActivity.CURRENT_USER, currentUser);
+        intent.putExtra(PromptEditActivity.SELECTED_PROMPT, story);
+        startActivity(intent);
     }
 
     @Override

@@ -24,10 +24,15 @@ Reaching a level we have only known
     <string name="words_string">%d words</string>
     <string name="prompting_activity">Prompting Activity</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_prompts">No Prompts :(</string>
     <string name="click_button_hint">Click the Button below to add one!</string>
     <string name="error_occured">An unexpected error Occurred</string>
     <string name="check_internet">Please check your internet and try again</string>
+    <string name="story">Story</string>
+    <string name="prompt_title">Prompt Title</string>
+
+    <string name="fab_fade_animation">com.marcoscg.fabscrollanimations.Fade</string>
+    <string name="start_scrolling">Start Scrolling</string>
+    <string name="stop_scrolling">Stop Scrolling</string>
+    <string name="restart_prompt">Restart Prompts</string>
 </resources>

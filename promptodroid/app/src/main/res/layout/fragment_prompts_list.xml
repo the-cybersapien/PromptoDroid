@@ -22,6 +22,6 @@
         app:fabSize="normal"
         app:layout_anchor="@id/prompts_list_recycler_view"
         app:layout_anchorGravity="bottom|end"
-        app:layout_behavior="com.marcoscg.fabscrollanimations.Fade" />
+        app:layout_behavior="@string/fab_fade_animation" />
 
 </android.support.design.widget.CoordinatorLayout>
