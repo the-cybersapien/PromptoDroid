@@ -115,7 +115,12 @@ public class AutoChangingTextView extends android.support.v7.widget.AppCompatTex
             }
             final String displayWords = getWordsToDisplay();
             Log.i(LOG_TAG, "run: " + displayWords);
-            post(() -> setText(displayWords));
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    setText(displayWords);
+                }
+            });
             if (currentWordIndex == -1) {
                 running = false;
                 if (finishedListener != null) {

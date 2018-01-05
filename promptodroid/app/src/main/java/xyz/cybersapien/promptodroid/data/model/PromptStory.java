@@ -109,13 +109,12 @@ public class PromptStory implements Parcelable {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("PromptStory{");
-        sb.append("storyTitle='").append(storyTitle).append('\'');
-        sb.append(", storyDetail='").append(storyDetail).append('\'');
-        sb.append(", id='").append(id).append('\'');
-        sb.append(", date=").append(date);
-        sb.append(", userId='").append(userId).append('\'');
-        sb.append('}');
-        return sb.toString();
+        String sb = "PromptStory{" + "storyTitle='" + storyTitle + '\'' +
+                ", storyDetail='" + storyDetail + '\'' +
+                ", id='" + id + '\'' +
+                ", date=" + date +
+                ", userId='" + userId + '\'' +
+                '}';
+        return sb;
     }
 }

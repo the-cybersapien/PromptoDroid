@@ -38,4 +38,9 @@ Reaching a level we have only known
     <string name="promptodroid_logo">PromptoDroid logo</string>
     <string name="new_prompt">Start Prompt</string>
     <string name="empty_view">Empty View</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="log_out">Log out</string>
+    <string name="login_required">Login required!</string>
+    <string name="edit">Edit</string>
 </resources>

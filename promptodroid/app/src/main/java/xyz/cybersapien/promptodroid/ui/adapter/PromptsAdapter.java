@@ -40,12 +40,10 @@ public class PromptsAdapter extends RecyclerView.Adapter<PromptHolder> {
     public void onBindViewHolder(final PromptHolder holder, int position) {
         PromptStory currentStory = storyList.get(position);
 
-        int words = currentStory.getStoryDetail().split(" ").length;
-
         holder.promptTitleTextView.setText(currentStory.getStoryTitle());
         String formattedDate = Utilities.getFormattedDate(currentStory.getDate());
         holder.promptsDateTextView.setText(formattedDate);
-        holder.wordsCountTextView.setText(context.getString(R.string.words_string, words));
+        holder.wordsCountTextView.setText(Utilities.getWordCount(context, currentStory.getStoryDetail()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

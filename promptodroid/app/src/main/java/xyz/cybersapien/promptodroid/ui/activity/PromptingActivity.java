@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,12 +49,15 @@ public class PromptingActivity extends AppCompatActivity implements AutoChanging
         }
 
         setTitle(story.getStoryTitle());
-        toggleButton.setOnClickListener(v -> {
-            isRunning = !isRunning;
-            if (isRunning) {
-                startPrompting();
-            } else {
-                stopPrompting();
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isRunning = !isRunning;
+                if (isRunning) {
+                    startPrompting();
+                } else {
+                    stopPrompting();
+                }
             }
         });
     }

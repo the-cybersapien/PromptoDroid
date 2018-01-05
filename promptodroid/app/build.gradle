@@ -1,8 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
-apply from: 'keys.gradle'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'keyAlias'
+            keyPassword "droidstore"
+            storeFile file("$rootDir/keystore.jks")
+            storePassword "droidstore"
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "xyz.cybersapien.promptodroid"
@@ -17,15 +24,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
-        buildTypes.each {
-            it.resValue('string', 'facebook_application_id', project.ext.facebookAppId)
-            it.resValue('string', 'facebook_login_protocol_scheme', "fb$project.ext.facebookAppId")
+        debug {
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
@@ -45,7 +52,6 @@ dependencies {
     implementation "com.google.firebase:firebase-core:$firebaseVersion"
     implementation "com.google.firebase:firebase-auth:$firebaseVersion"
     implementation 'com.firebaseui:firebase-ui-auth:3.1.2'
-    implementation 'com.facebook.android:facebook-login:4.29.0'
     // Google Play Services
     implementation "com.google.android.gms:play-services-base:$gmsVersion"
     implementation "com.google.android.gms:play-services-auth:$gmsVersion"
@@ -59,13 +65,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     // My Own RecyclerView Library to handle Empty Views
     implementation 'com.github.the-cybersapien:recyclerELE:v1.1'
-
-    // Testing Libraries
-    /**
-     testImplementation 'junit:junit:4.12'
-     androidTestImplementation 'com.android.support.test:runner:1.0.1'
-     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-     */
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -8,6 +8,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import xyz.cybersapien.promptodroid.R;
+
 /**
  * Created by ogcybersapien on 31/12/17.
  */
@@ -27,5 +29,10 @@ public final class Utilities {
     public static String getFormattedDate(long date) {
         DateFormat dateFormat = SimpleDateFormat.getDateInstance();
         return dateFormat.format(new Date(date));
+    }
+
+    public static String getWordCount(Context context, String detailText) {
+        int words = detailText.split(" ").length;
+        return context.getString(R.string.words_string, words);
     }
 }

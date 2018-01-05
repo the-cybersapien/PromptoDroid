@@ -12,12 +12,10 @@ import android.widget.Toast;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 
 import xyz.cybersapien.promptodroid.R;
-import xyz.cybersapien.promptodroid.utils.Constants;
 import xyz.cybersapien.promptodroid.utils.Utilities;
 
 public class SplashScreen extends AppCompatActivity {
@@ -53,7 +51,7 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
             launchMainActivity();
         }
     }
@@ -81,8 +79,7 @@ public class SplashScreen extends AppCompatActivity {
                                 .setLogo(R.drawable.ic_computer)
                                 .setTheme(R.style.AppTheme)
                                 .setAvailableProviders(Arrays.asList(
-                                        new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
-                                        new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()
+                                        new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build()
                                 )).build(), RC_SIGN_IN);
                         signInIntent++;
                     }
@@ -96,6 +93,7 @@ public class SplashScreen extends AppCompatActivity {
     private void launchMainActivity() {
         Intent intent = new Intent(SplashScreen.this, MainActivity.class);
         startActivity(intent);
+        finishAffinity();
     }
 
     private AlertDialog getAlertDialog() {

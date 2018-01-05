@@ -95,15 +95,11 @@ public class PromptsListFragment extends Fragment implements PromptsAdapter.OnCl
     ValueEventListener databaseValueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
-            Log.d(LOG_TAG, "onDataChange: " + dataSnapshot.toString());
-            long snapshot = dataSnapshot.child(Constants.PROMPT_KEY).getChildrenCount();
-            Log.d(LOG_TAG, "onDataChange: " + snapshot);
-
             Iterator<DataSnapshot> snapshotIterator = dataSnapshot
                     .child(Constants.PROMPT_KEY).getChildren().iterator();
             ArrayList<PromptStory> stories = new ArrayList<>();
-            for (Iterator<DataSnapshot> it = snapshotIterator; it.hasNext(); ) {
-                DataSnapshot currentData = it.next();
+            for (; snapshotIterator.hasNext(); ) {
+                DataSnapshot currentData = snapshotIterator.next();
                 PromptStory story = currentData.getValue(PromptStory.class);
                 if (story != null) {
                     stories.add(story);

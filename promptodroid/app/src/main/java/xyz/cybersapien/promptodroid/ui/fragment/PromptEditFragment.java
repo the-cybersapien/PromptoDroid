@@ -172,8 +172,8 @@ public class PromptEditFragment extends Fragment {
         storyEditText.setText(story.getStoryDetail());
         String date = Utilities.getFormattedDate(story.getDate());
         promptDateTextView.setText(date);
-        int wordCount = story.getStoryDetail().split(" ").length;
-        wordCountTextView.setText(getString(R.string.words_string, wordCount));
+        String wordsCount = Utilities.getWordCount(getContext(), story.getStoryDetail());
+        wordCountTextView.setText(wordsCount);
         promptDateTextView.setVisibility(View.VISIBLE);
         wordCountTextView.setVisibility(View.VISIBLE);
         actionButton.setImageResource(R.drawable.ic_play);

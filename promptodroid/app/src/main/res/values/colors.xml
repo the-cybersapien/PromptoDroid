@@ -13,4 +13,5 @@
     <color name="grey800">#424242</color>
     <color name="grey850">#303030</color>
     <color name="cyan500">#00BCD4</color>
+    <color name="black_trans">#AA000000</color>
 </resources>
