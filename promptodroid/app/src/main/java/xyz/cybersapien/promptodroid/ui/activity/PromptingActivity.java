@@ -48,6 +48,8 @@ public class PromptingActivity extends AppCompatActivity implements AutoChanging
             }
         }
 
+        promptingTextView.setFinishedListener(this);
+
         setTitle(story.getStoryTitle());
         toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override

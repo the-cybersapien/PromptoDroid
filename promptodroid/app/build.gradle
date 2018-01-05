@@ -65,6 +65,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     // My Own RecyclerView Library to handle Empty Views
     implementation 'com.github.the-cybersapien:recyclerELE:v1.1'
+    implementation 'com.github.jrvansuita:MaterialAbout:0.1.9'
 }
 
 apply plugin: 'com.google.gms.google-services'

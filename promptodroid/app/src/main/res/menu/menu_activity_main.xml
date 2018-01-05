@@ -7,4 +7,9 @@
         android:icon="@drawable/ic_log_out"
         android:title="@string/log_out"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/about"
+        android:title="@string/about"
+        app:showAsAction="never" />
 </menu>

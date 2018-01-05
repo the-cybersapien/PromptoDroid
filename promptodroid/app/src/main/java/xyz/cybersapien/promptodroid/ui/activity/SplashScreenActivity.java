@@ -18,7 +18,7 @@ import java.util.Arrays;
 import xyz.cybersapien.promptodroid.R;
 import xyz.cybersapien.promptodroid.utils.Utilities;
 
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity {
 
     public static final int RC_INTERNET_SETTINGS = -100;
     public static final int RC_SIGN_IN = 200;
@@ -62,13 +62,13 @@ public class SplashScreen extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-                    if (!Utilities.isInternetConnected(SplashScreen.this)) {
+                    if (!Utilities.isInternetConnected(SplashScreenActivity.this)) {
                         getAlertDialog().show();
                     } else {
                         // User is signed out
                         // Check if user wants to exit
                         if (signInIntent == 1) {
-                            Toast.makeText(SplashScreen.this, "Press back again to exit!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SplashScreenActivity.this, R.string.back_to_exit, Toast.LENGTH_SHORT).show();
                         } else if (signInIntent == 2) {
                             finish();
                             return;
@@ -91,22 +91,22 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void launchMainActivity() {
-        Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+        Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
         startActivity(intent);
         finishAffinity();
     }
 
     private AlertDialog getAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle("No Connectivity")
-                .setMessage("First Run requires internet connection")
-                .setPositiveButton("Open Internet Settings", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.no_connect)
+                .setMessage(R.string.internet_req)
+                .setPositiveButton(R.string.open_intenet, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         startActivityForResult(new Intent(Settings.ACTION_WIRELESS_SETTINGS), RC_INTERNET_SETTINGS);
                     }
                 })
-                .setNegativeButton("Close App", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.close_app, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();

@@ -72,26 +72,31 @@ public class MainActivity extends AppCompatActivity implements PromptsListFragme
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.log_out) {
-            AlertDialog dialog = new AlertDialog.Builder(this)
-                    .setTitle("Confirm")
-                    .setMessage("Are you sure you want to log out?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            FirebaseAuth.getInstance().signOut();
-                            finish();
-                        }
-                    }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    }).create();
-            dialog.show();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.log_out:
+                AlertDialog dialog = new AlertDialog.Builder(this)
+                        .setTitle(R.string.confirm)
+                        .setMessage(R.string.log_out_confirm)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseAuth.getInstance().signOut();
+                                finish();
+                            }
+                        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create();
+                dialog.show();
+                return true;
+            case R.id.about:
+                Intent about = new Intent(this, AboutActivity.class);
+                startActivity(about);
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private void setEditFragment(@Nullable PromptStory story) {

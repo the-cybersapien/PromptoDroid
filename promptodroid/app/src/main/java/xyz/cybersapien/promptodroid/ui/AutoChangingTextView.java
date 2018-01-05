@@ -113,6 +113,11 @@ public class AutoChangingTextView extends android.support.v7.widget.AppCompatTex
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if (currentWordIndex == -1) {
+                running = false;
+                encoreListener();
+                break;
+            }
             final String displayWords = getWordsToDisplay();
             Log.i(LOG_TAG, "run: " + displayWords);
             post(new Runnable() {
@@ -123,10 +128,14 @@ public class AutoChangingTextView extends android.support.v7.widget.AppCompatTex
             });
             if (currentWordIndex == -1) {
                 running = false;
-                if (finishedListener != null) {
-                    finishedListener.onFinished();
-                }
+                encoreListener();
             }
+        }
+    }
+
+    private void encoreListener() {
+        if (finishedListener != null) {
+            finishedListener.onFinished();
         }
     }
 
