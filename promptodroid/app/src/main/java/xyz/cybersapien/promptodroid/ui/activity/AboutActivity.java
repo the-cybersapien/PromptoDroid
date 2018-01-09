@@ -8,6 +8,8 @@ import android.widget.TextView;
 import com.vansuita.materialabout.builder.AboutBuilder;
 import com.vansuita.materialabout.views.AboutView;
 
+import org.jetbrains.annotations.Nullable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.cybersapien.promptodroid.R;
@@ -52,12 +54,11 @@ public class AboutActivity extends AppCompatActivity implements GetVersionTask.O
     }
 
     @Override
-    public void onVersionFinish(String version) {
+    public void onVersionTaskFinish(@Nullable String version) {
         if (version == null) {
             versionTextView.setText(R.string.error_occured);
         } else {
             versionTextView.setText(getString(R.string.latest_version_template, version));
         }
     }
-
 }

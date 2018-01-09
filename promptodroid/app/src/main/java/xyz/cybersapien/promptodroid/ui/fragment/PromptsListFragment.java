@@ -27,7 +27,7 @@ import xyz.cybersapien.promptodroid.data.DataStore;
 import xyz.cybersapien.promptodroid.data.model.PromptStory;
 import xyz.cybersapien.promptodroid.data.model.User;
 import xyz.cybersapien.promptodroid.ui.adapter.PromptsAdapter;
-import xyz.cybersapien.promptodroid.utils.Constants;
+import xyz.cybersapien.promptodroid.utils.ConstantsKt;
 import xyz.cybersapien.recyclerele.RecyclerELEAdapter;
 
 /**
@@ -46,12 +46,8 @@ public class PromptsListFragment extends Fragment implements PromptsAdapter.OnCl
     }
 
     private InteractionListener interactionListener;
-    private User user;
     private RecyclerELEAdapter recyclerAdapter;
     private ArrayList<PromptStory> storyArrayList;
-
-    private View emptyView;
-    private View errorView;
 
     @Override
     public void onAttach(Context context) {
@@ -69,11 +65,11 @@ public class PromptsListFragment extends Fragment implements PromptsAdapter.OnCl
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_prompts_list, container, false);
         ButterKnife.bind(this, v);
-        user = interactionListener.getCurrentUser();
+        User user = interactionListener.getCurrentUser();
         promptsListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        emptyView = inflater.inflate(R.layout.view_empty, promptsListRecyclerView, false);
-        errorView = inflater.inflate(R.layout.view_error, promptsListRecyclerView, false);
+        View emptyView = inflater.inflate(R.layout.view_empty, promptsListRecyclerView, false);
+        View errorView = inflater.inflate(R.layout.view_error, promptsListRecyclerView, false);
 
         storyArrayList = new ArrayList<>();
         PromptsAdapter adapter = new PromptsAdapter(getContext(), storyArrayList, this);
@@ -96,7 +92,7 @@ public class PromptsListFragment extends Fragment implements PromptsAdapter.OnCl
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
             Iterator<DataSnapshot> snapshotIterator = dataSnapshot
-                    .child(Constants.PROMPT_KEY).getChildren().iterator();
+                    .child(ConstantsKt.PROMPT_KEY).getChildren().iterator();
             ArrayList<PromptStory> stories = new ArrayList<>();
             for (; snapshotIterator.hasNext(); ) {
                 DataSnapshot currentData = snapshotIterator.next();

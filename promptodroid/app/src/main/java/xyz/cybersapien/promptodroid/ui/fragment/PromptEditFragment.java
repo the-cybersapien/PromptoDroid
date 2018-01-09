@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.cybersapien.promptodroid.R;
 import xyz.cybersapien.promptodroid.data.model.PromptStory;
-import xyz.cybersapien.promptodroid.utils.Utilities;
+import xyz.cybersapien.promptodroid.utils.UtilitiesKt;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -170,9 +170,9 @@ public class PromptEditFragment extends Fragment {
         disableEditText(storyEditText);
         titleEditText.setText(story.getStoryTitle());
         storyEditText.setText(story.getStoryDetail());
-        String date = Utilities.getFormattedDate(story.getDate());
+        String date = UtilitiesKt.getFormattedDate(story.getDate());
         promptDateTextView.setText(date);
-        String wordsCount = Utilities.getWordCount(getContext(), story.getStoryDetail());
+        String wordsCount = UtilitiesKt.getWordCount(getContext(), story.getStoryDetail());
         wordCountTextView.setText(wordsCount);
         promptDateTextView.setVisibility(View.VISIBLE);
         wordCountTextView.setVisibility(View.VISIBLE);

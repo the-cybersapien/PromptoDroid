@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
 
 import xyz.cybersapien.promptodroid.R;
-import xyz.cybersapien.promptodroid.utils.Utilities;
+import xyz.cybersapien.promptodroid.utils.UtilitiesKt;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -62,7 +62,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) {
-                    if (!Utilities.isInternetConnected(SplashScreenActivity.this)) {
+                    if (!UtilitiesKt.isInternetConnected(SplashScreenActivity.this)) {
                         getAlertDialog().show();
                     } else {
                         // User is signed out

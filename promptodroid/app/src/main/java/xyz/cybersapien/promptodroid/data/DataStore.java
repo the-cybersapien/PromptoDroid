@@ -4,7 +4,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import xyz.cybersapien.promptodroid.data.model.User;
-import xyz.cybersapien.promptodroid.utils.Constants;
+import xyz.cybersapien.promptodroid.utils.ConstantsKt;
 
 /**
  * Created by ogcybersapien on 1/1/18.
@@ -27,7 +27,7 @@ public class DataStore {
     }
 
     public DatabaseReference getUserDataReference(User user) {
-        return rootDatabaseInstance.getReference(Constants.USER_KEY + "/" + user.getUid());
+        return rootDatabaseInstance.getReference(ConstantsKt.USER_KEY + "/" + user.getUid());
     }
 
 }

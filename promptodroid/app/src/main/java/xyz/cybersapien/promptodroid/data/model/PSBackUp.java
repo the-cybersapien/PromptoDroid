@@ -9,7 +9,7 @@ import java.util.Date;
  * Created by ogcybersapien on 1/1/18.
  */
 
-public class PromptStory implements Parcelable {
+public class PSBackUp implements Parcelable {
 
     private String storyTitle;
     private String storyDetail;
@@ -17,16 +17,16 @@ public class PromptStory implements Parcelable {
     private long date;
     private String userId;
 
-    public PromptStory() {
+    public PSBackUp() {
     }
 
-    public PromptStory(String storyTitle, String storyDetail) {
+    public PSBackUp(String storyTitle, String storyDetail) {
         this.storyTitle = storyTitle;
         this.storyDetail = storyDetail;
         date = new Date().getTime();
     }
 
-    public PromptStory(String storyTitle, String storyDetail, String userId) {
+    public PSBackUp(String storyTitle, String storyDetail, String userId) {
         this.storyTitle = storyTitle;
         this.storyDetail = storyDetail;
         this.userId = userId;
@@ -87,7 +87,7 @@ public class PromptStory implements Parcelable {
         dest.writeString(this.userId);
     }
 
-    protected PromptStory(Parcel in) {
+    protected PSBackUp(Parcel in) {
         this.storyTitle = in.readString();
         this.storyDetail = in.readString();
         this.id = in.readString();
@@ -95,21 +95,21 @@ public class PromptStory implements Parcelable {
         this.userId = in.readString();
     }
 
-    public static final Parcelable.Creator<PromptStory> CREATOR = new Parcelable.Creator<PromptStory>() {
+    public static final Parcelable.Creator<PSBackUp> CREATOR = new Parcelable.Creator<PSBackUp>() {
         @Override
-        public PromptStory createFromParcel(Parcel source) {
-            return new PromptStory(source);
+        public PSBackUp createFromParcel(Parcel source) {
+            return new PSBackUp(source);
         }
 
         @Override
-        public PromptStory[] newArray(int size) {
-            return new PromptStory[size];
+        public PSBackUp[] newArray(int size) {
+            return new PSBackUp[size];
         }
     };
 
     @Override
     public String toString() {
-        String sb = "PromptStory{" + "storyTitle='" + storyTitle + '\'' +
+        String sb = "PSBackUp{" + "storyTitle='" + storyTitle + '\'' +
                 ", storyDetail='" + storyDetail + '\'' +
                 ", id='" + id + '\'' +
                 ", date=" + date +

@@ -19,8 +19,9 @@ import xyz.cybersapien.promptodroid.R;
 import xyz.cybersapien.promptodroid.data.DataStore;
 import xyz.cybersapien.promptodroid.data.model.PromptStory;
 import xyz.cybersapien.promptodroid.data.model.User;
-import xyz.cybersapien.promptodroid.utils.Constants;
-import xyz.cybersapien.promptodroid.utils.Utilities;
+import xyz.cybersapien.promptodroid.utils.ConstantsKt;
+import xyz.cybersapien.promptodroid.utils.UtilitiesKt;
+
 
 /**
  * Created by ogcybersapien on 5/1/18.
@@ -62,8 +63,12 @@ public class PromptsListService extends RemoteViewsService {
             RemoteViews view = new RemoteViews(context.getPackageName(), R.layout.widget_item_prompt_story);
             PromptStory story = promptStories.get(position);
             view.setTextViewText(R.id.prompts_title_text_view, story.getStoryTitle());
-            view.setTextViewText(R.id.prompts_date_text_view, Utilities.getFormattedDate(story.getDate()));
-            view.setTextViewText(R.id.words_count_text_view, Utilities.getWordCount(context, story.getStoryDetail()));
+            view.setTextViewText(R.id.prompts_date_text_view,
+                    UtilitiesKt.getFormattedDate(story.getDate())
+            );
+            view.setTextViewText(R.id.words_count_text_view,
+                    UtilitiesKt.getWordCount(context, story.getStoryDetail())
+            );
             return view;
         }
 
@@ -105,7 +110,7 @@ public class PromptsListService extends RemoteViewsService {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             Iterator<DataSnapshot> snapshotIterator = dataSnapshot
-                                    .child(Constants.PROMPT_KEY).getChildren().iterator();
+                                    .child(ConstantsKt.PROMPT_KEY).getChildren().iterator();
                             ArrayList<PromptStory> stories = new ArrayList<>();
                             for (; snapshotIterator.hasNext(); ) {
                                 DataSnapshot currentData = snapshotIterator.next();

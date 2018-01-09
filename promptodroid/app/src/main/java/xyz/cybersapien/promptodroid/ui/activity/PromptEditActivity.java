@@ -17,7 +17,7 @@ import xyz.cybersapien.promptodroid.data.DataStore;
 import xyz.cybersapien.promptodroid.data.model.PromptStory;
 import xyz.cybersapien.promptodroid.data.model.User;
 import xyz.cybersapien.promptodroid.ui.fragment.PromptEditFragment;
-import xyz.cybersapien.promptodroid.utils.Constants;
+import xyz.cybersapien.promptodroid.utils.ConstantsKt;
 
 public class PromptEditActivity extends AppCompatActivity implements PromptEditFragment.InteractionListener {
 
@@ -73,7 +73,7 @@ public class PromptEditActivity extends AppCompatActivity implements PromptEditF
     @Override
     public void updatePrompt(PromptStory story) {
         DatabaseReference dbRef = DataStore.getInstance()
-                .getUserDataReference(currentUser).child(Constants.PROMPT_KEY + "/" + story.getDate());
+                .getUserDataReference(currentUser).child(ConstantsKt.PROMPT_KEY + "/" + story.getDate());
         dbRef.setValue(story);
         finish();
     }

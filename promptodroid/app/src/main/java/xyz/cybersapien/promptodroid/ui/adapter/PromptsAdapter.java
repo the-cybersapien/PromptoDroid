@@ -10,7 +10,7 @@ import java.util.List;
 
 import xyz.cybersapien.promptodroid.R;
 import xyz.cybersapien.promptodroid.data.model.PromptStory;
-import xyz.cybersapien.promptodroid.utils.Utilities;
+import xyz.cybersapien.promptodroid.utils.UtilitiesKt;
 
 /**
  * Created by ogcybersapien on 1/1/18.
@@ -41,9 +41,9 @@ public class PromptsAdapter extends RecyclerView.Adapter<PromptHolder> {
         PromptStory currentStory = storyList.get(position);
 
         holder.promptTitleTextView.setText(currentStory.getStoryTitle());
-        String formattedDate = Utilities.getFormattedDate(currentStory.getDate());
+        String formattedDate = UtilitiesKt.getFormattedDate(currentStory.getDate());
         holder.promptsDateTextView.setText(formattedDate);
-        holder.wordsCountTextView.setText(Utilities.getWordCount(context, currentStory.getStoryDetail()));
+        holder.wordsCountTextView.setText(UtilitiesKt.getWordCount(context, currentStory.getStoryDetail()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

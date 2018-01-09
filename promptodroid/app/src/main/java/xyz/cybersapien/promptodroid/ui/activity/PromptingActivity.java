@@ -85,7 +85,12 @@ public class PromptingActivity extends AppCompatActivity implements AutoChanging
 
     @Override
     public void onFinished() {
-        toggleButton.setImageResource(R.drawable.ic_refresh);
-        toggleButton.setContentDescription(getString(R.string.restart_prompt));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                toggleButton.setImageResource(R.drawable.ic_refresh);
+                toggleButton.setContentDescription(getString(R.string.restart_prompt));
+            }
+        });
     }
 }

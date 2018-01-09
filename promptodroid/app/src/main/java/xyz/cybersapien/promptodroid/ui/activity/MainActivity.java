@@ -23,7 +23,7 @@ import xyz.cybersapien.promptodroid.data.model.PromptStory;
 import xyz.cybersapien.promptodroid.data.model.User;
 import xyz.cybersapien.promptodroid.ui.fragment.PromptEditFragment;
 import xyz.cybersapien.promptodroid.ui.fragment.PromptsListFragment;
-import xyz.cybersapien.promptodroid.utils.Constants;
+import xyz.cybersapien.promptodroid.utils.ConstantsKt;
 
 public class MainActivity extends AppCompatActivity implements PromptsListFragment.InteractionListener,
         PromptEditFragment.InteractionListener {
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements PromptsListFragme
 
     @Override
     public void updatePrompt(PromptStory story) {
-        DatabaseReference dbRef = DataStore.getInstance().getUserDataReference(currentUser).child(Constants.PROMPT_KEY + "/" + story.getDate());
+        DatabaseReference dbRef = DataStore.getInstance().getUserDataReference(currentUser).child(ConstantsKt.PROMPT_KEY + "/" + story.getDate());
         dbRef.setValue(story);
         getSupportFragmentManager().beginTransaction()
                 .remove(promptEditFragment).commit();
