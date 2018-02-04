@@ -2,6 +2,7 @@ package xyz.cybersapien.promptodroid.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.view.LayoutInflater
 import xyz.cybersapien.promptodroid.R
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,3 +26,5 @@ fun getWordCount(context: Context, detailText: String): String {
     val words = detailText.split(" ").size
     return context.getString(R.string.words_string, words)
 }
+
+fun Context.layoutInflator(): LayoutInflater = LayoutInflater.from(this)
